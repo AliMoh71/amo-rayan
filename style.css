@@ -1,0 +1,989 @@
+/* =========================================
+   AMO RAYAN - COMPLETE STYLESHEET
+========================================= */
+
+/* ===== BRAND COLORS ===== */
+
+:root {
+    --red: #9F1D24;
+    --dark-red: #80171D;
+    --yellow: #FFDF00;
+    --white: #FFFFFF;
+    --background: #FFFDF7;
+    --text: #252525;
+    --gray: #777777;
+}
+
+/* ===== GENERAL ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Tahoma, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+main {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+button:focus-visible,
+.price-thumbnail:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    background-color: var(--red);
+    border-bottom: 5px solid var(--yellow);
+
+    padding: 20px 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    display: block;
+    width: 190px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.prices-section,
+.offers-section {
+    padding: 30px 0;
+    text-align: center;
+}
+
+.prices-section h2,
+.offers-section h2 {
+    color: var(--red);
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.prices-description {
+    font-size: 15px;
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   PRICE LIST - TWO IMAGES
+========================================= */
+
+.prices-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    align-items: start;
+}
+
+.price-thumbnail {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    border: 2px solid var(--yellow);
+    border-radius: 15px;
+
+    background-color: var(--white);
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+    cursor: zoom-in;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.price-thumbnail:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================================
+   FULLSCREEN PRICE GALLERY
+========================================= */
+
+.gallery-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1000;
+
+    background-color: rgba(0, 0, 0, 0.96);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    overscroll-behavior: contain;
+}
+
+.gallery-modal[hidden] {
+    display: none !important;
+}
+
+/* ===== FULLSCREEN IMAGE + ZOOM ===== */
+
+#galleryImage {
+    display: block;
+
+    max-width: 90vw;
+    max-height: 85vh;
+    max-height: 85dvh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    /* Required for custom mobile zoom */
+    touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    /* Zoom from image center */
+    transform-origin: center center;
+
+    /* JavaScript controls the transform */
+    transform: translate(0px, 0px) scale(1);
+
+    cursor: zoom-in;
+}
+
+#galleryImage.zoomed {
+    cursor: grab;
+}
+
+#galleryImage:active {
+    cursor: grabbing;
+}
+
+/* ===== CLOSE BUTTON ===== */
+
+.gallery-close {
+    position: absolute;
+
+    top: max(15px, env(safe-area-inset-top));
+    right: 20px;
+
+    z-index: 1010;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: var(--red);
+    color: var(--white);
+
+    font-size: 32px;
+    line-height: 1;
+}
+
+/* ===== GALLERY NAVIGATION ARROWS ===== */
+
+.gallery-prev,
+.gallery-next {
+    position: absolute;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 1010;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: var(--red);
+    color: var(--white);
+
+    font-size: 25px;
+    line-height: 1;
+
+    /* Keep arrow symbols consistent on Arabic pages */
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+/* Previous image: RIGHT */
+.gallery-prev {
+    right: 12px;
+    left: auto;
+}
+
+/* Next image: LEFT */
+.gallery-next {
+    left: 12px;
+    right: auto;
+}
+
+/* ===== IMAGE COUNTER ===== */
+
+.gallery-counter {
+    position: absolute;
+
+    bottom: max(20px, env(safe-area-inset-bottom));
+
+    color: var(--white);
+
+    font-size: 16px;
+    font-weight: bold;
+
+    background-color: rgba(255, 255, 255, 0.15);
+
+    padding: 8px 18px;
+    border-radius: 25px;
+
+    direction: ltr;
+}
+
+/* =========================================
+   OFFERS SECTION
+========================================= */
+
+.offers-section {
+    max-width: 650px;
+    margin: 0 auto 40px;
+}
+
+.offers-section h2 {
+    margin-bottom: 25px;
+}
+
+/* ===== SLIDER WRAPPER ===== */
+
+.offers-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+/* ===== HORIZONTAL SLIDER ===== */
+
+.offers-slider {
+    display: flex;
+
+    width: 100%;
+    gap: 0;
+
+    direction: rtl;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+
+    overscroll-behavior-x: contain;
+}
+
+.offers-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* ===== INDIVIDUAL OFFER ===== */
+
+.offer-card {
+    flex: 0 0 100%;
+    min-width: 0;
+
+    padding: 8px;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+.offer-card img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 15px;
+
+    background-color: var(--white);
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* =========================================
+   OFFERS NAVIGATION BUTTONS
+========================================= */
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 10;
+
+    width: 44px;
+    height: 44px;
+
+    border: 2px solid var(--yellow);
+    border-radius: 50%;
+
+    background-color: var(--red);
+    color: var(--white);
+
+    font-size: 25px;
+    line-height: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    direction: ltr;
+    unicode-bidi: isolate;
+
+    transition: background-color 0.2s ease;
+}
+
+.slider-btn:hover {
+    background-color: var(--dark-red);
+}
+
+.slider-btn:active {
+    background-color: var(--yellow);
+    color: var(--red);
+}
+
+/* Previous offer: RIGHT */
+.prev-btn {
+    right: 5px;
+    left: auto;
+}
+
+/* Next offer: LEFT */
+.next-btn {
+    left: 5px;
+    right: auto;
+}
+
+/* =========================================
+   SLIDER DOTS
+========================================= */
+
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 9px;
+    margin-top: 15px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+
+    flex-shrink: 0;
+
+    background-color: #D5D5D5;
+
+    border-radius: 50%;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dot.active {
+    background-color: var(--red);
+    transform: scale(1.25);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+    background-color: var(--red);
+    color: var(--white);
+
+    border-top: 5px solid var(--yellow);
+
+    padding: 30px 15px;
+
+    text-align: center;
+}
+
+/* ===== FOOTER LOGO ===== */
+
+.footer-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.footer-logo {
+    display: block;
+
+    width: 120px;
+    max-width: 100%;
+    height: auto;
+}
+
+.footer h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.footer p {
+    color: var(--yellow);
+    font-size: 15px;
+}
+
+/* =========================================
+   TABLET RESPONSIVENESS
+========================================= */
+
+@media (max-width: 768px) {
+
+    main {
+        padding: 16px;
+    }
+
+    .logo {
+        width: 170px;
+    }
+
+    .prices-gallery {
+        gap: 12px;
+    }
+
+    .offers-section {
+        max-width: 100%;
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   iPhone + Android
+========================================= */
+
+@media (max-width: 600px) {
+
+    main {
+        padding: 12px;
+    }
+
+    /* Header */
+
+    .header {
+        padding: 12px;
+    }
+
+    .logo {
+        width: 150px;
+    }
+
+    /* Sections */
+
+    .prices-section,
+    .offers-section {
+        padding: 25px 0;
+    }
+
+    .prices-section h2,
+    .offers-section h2 {
+        font-size: 24px;
+    }
+
+    .prices-description {
+        font-size: 13px;
+    }
+
+    /* Price images */
+
+    .prices-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .price-thumbnail {
+        border-radius: 10px;
+    }
+
+    /* Fullscreen gallery */
+
+    #galleryImage {
+        max-width: 96vw;
+        max-height: 80vh;
+        max-height: 80dvh;
+    }
+
+    .gallery-close {
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+    }
+
+    .gallery-prev,
+    .gallery-next {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+
+    .gallery-prev {
+        right: 8px;
+    }
+
+    .gallery-next {
+        left: 8px;
+    }
+
+    /* Offers */
+
+    .offer-card {
+        padding: 5px;
+    }
+
+    .offer-card img {
+        border-radius: 12px;
+    }
+
+    .slider-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+
+    .prev-btn {
+        right: 5px;
+    }
+
+    .next-btn {
+        left: 5px;
+    }
+
+    /* Footer */
+
+    .footer {
+        padding: 25px 12px;
+    }
+
+    .footer-logo {
+        width: 100px;
+    }
+
+    .footer h3 {
+        font-size: 21px;
+    }
+
+    .footer p {
+        font-size: 14px;
+    }
+}
+/* =========================================
+   NEW PRODUCTS - جديدنا
+========================================= */
+
+.new-section {
+    max-width: 650px;
+    margin: 0 auto 40px;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.new-section h2 {
+    color: var(--red);
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+/* Slider wrapper */
+
+.new-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Horizontal slider */
+
+.new-slider {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+
+    direction: rtl;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    overscroll-behavior-x: contain;
+}
+
+.new-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual image */
+
+.new-card {
+    flex: 0 0 100%;
+    min-width: 0;
+    padding: 8px;
+
+    border: none;
+    background: transparent;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    cursor: zoom-in;
+}
+
+.new-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    border-radius: 15px;
+    background: var(--white);
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    pointer-events: none;
+}
+
+/* Navigation arrows */
+
+.new-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    z-index: 10;
+
+    width: 44px;
+    height: 44px;
+
+    border: 2px solid var(--yellow);
+    border-radius: 50%;
+
+    background: var(--red);
+    color: var(--white);
+
+    font-size: 25px;
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    direction: ltr;
+    unicode-bidi: isolate;
+
+    cursor: pointer;
+}
+
+.new-btn:hover {
+    background: var(--dark-red);
+}
+
+/* Previous: right */
+
+.new-prev-btn {
+    right: 5px;
+    left: auto;
+}
+
+/* Next: left */
+
+.new-next-btn {
+    left: 5px;
+    right: auto;
+}
+
+/* Navigation dots */
+
+.new-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 9px;
+    margin-top: 15px;
+}
+
+.new-dot {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+    background: #D5D5D5;
+
+    transition: background 0.2s ease,
+                transform 0.2s ease;
+}
+
+.new-dot.active {
+    background: var(--red);
+    transform: scale(1.25);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .new-section {
+        padding: 25px 0;
+    }
+
+    .new-section h2 {
+        font-size: 24px;
+    }
+
+    .new-card {
+        padding: 5px;
+    }
+
+    .new-card img {
+        border-radius: 12px;
+    }
+
+    .new-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .new-section h2 {
+        font-size: 21px;
+    }
+
+    .new-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+}
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+
+    .prices-section h2,
+    .offers-section h2 {
+        font-size: 21px;
+    }
+
+    .prices-gallery {
+        gap: 6px;
+    }
+
+    .gallery-prev,
+    .gallery-next {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    .slider-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+}
+
+/* =========================================
+   ACCESSIBILITY - REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html,
+    .offers-slider {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}
+/* =========================================
+   WHATSAPP BUTTON
+========================================= */
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 25px;
+    padding: 12px 22px;
+
+    background-color: #25D366;
+    color: #FFFFFF;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1DA851;
+    transform: translateY(-3px);
+}
+
+.whatsapp-btn svg {
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .whatsapp-btn {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+
+    .whatsapp-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+/* =========================================
+   RED SECTION BANNERS
+========================================= */
+
+.prices-section h2,
+.offers-section h2,
+.new-section h2 {
+
+    /* Brand colors */
+    background-color: var(--red);
+    color: var(--white);
+
+    /* Yellow accent */
+    border-bottom: 4px solid var(--yellow);
+
+    /* Banner shape */
+    border-radius: 12px;
+
+    /* Spacing */
+    padding: 16px 20px;
+    margin-bottom: 25px;
+
+    /* Text */
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+
+    /* Subtle shadow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================
+   MOBILE BANNERS
+========================================= */
+
+@media (max-width: 600px) {
+
+    .prices-section h2,
+    .offers-section h2,
+    .new-section h2 {
+
+        font-size: 21px;
+
+        padding: 14px 12px;
+
+        border-radius: 10px;
+
+        margin-bottom: 20px;
+    }
+}
